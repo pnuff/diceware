@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"math/big"
 	"os"
+	"strconv"
+	"strings"
 )
 
 // SixSided returns a random value between 1 and 6
@@ -24,7 +26,7 @@ func SixSided() (int, error) {
 
 
 func main() {
-	var results []int
+	var results, dieRoll = []int{}, []string{}
 	for i := 0; i < 5; i++ {
 		r, err := SixSided()
 		if err != nil {
@@ -35,7 +37,8 @@ func main() {
 	}
 
 	for _, r := range results {
-		fmt.Printf("%d", r)
+		dieRoll = append(dieRoll, strconv.Itoa(r))
 	}
-	fmt.Printf("\n")
+	line := strings.Join(dieRoll, "")
+	fmt.Printf("%s\n", line)
 }

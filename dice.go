@@ -26,10 +26,8 @@ func main() {
 		if r > 6 {
 			fmt.Printf("\n\nError, roll is > 6: %d\n\n", r)
 		}
-		fmt.Printf("%d\t", r)
 		results = append(results, r)
 	}
-	fmt.Printf("\ndone\n")
 
 	for _, r := range results {
 		fmt.Printf("%d", r)

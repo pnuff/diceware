@@ -26,7 +26,7 @@ func SixSided() (int, error) {
 	return 1+int(r.Int64()), err
 }
 
-// Read the wordlist file in, map the dice roll values to the words on each line
+// Read the wordlist file in, map the dice roll values to the words on each line.
 func ReadWordlist(r io.Reader) map[string]string {
 	var wordList = make(map[string]string)
 	scanner := bufio.NewScanner(r)
@@ -43,11 +43,10 @@ func ReadWordlist(r io.Reader) map[string]string {
 	return wordList
 }
 
-func main() {
-	words := ReadWordlist(os.Stdin)
-	fmt.Printf("%+v\n", words)
-	var results, dieRoll = []int{}, []string{}
-	for i := 0; i < 5; i++ {
+// ThrowDice rolls the given number of dice and returns them in an int slice.
+func ThrowDice(numDice int) []int {
+	var results = []int{}
+	for i := 0; i < numDice; i++ {
 		r, err := SixSided()
 		if err != nil {
 			fmt.Printf("Problem creating a random number.\n")
@@ -55,10 +54,24 @@ func main() {
 		}
 		results = append(results, r)
 	}
+	return results
+}
 
-	for _, r := range results {
-		dieRoll = append(dieRoll, strconv.Itoa(r))
+func main() {
+	words := ReadWordlist(os.Stdin)
+	var selected = []string{}
+	for i := 0; i < 5; i++ {
+		var dieRoll = []string{}
+		results := ThrowDice(5)
+		for _, r := range results {
+			dieRoll = append(dieRoll, strconv.Itoa(r))
+		}
+		line := strings.Join(dieRoll, "")
+		// TODO check for the line existing first
+		selected = append(selected, words[line])
 	}
-	line := strings.Join(dieRoll, "")
-	fmt.Printf("%s\n", line)
+	for _, s := range selected {
+		fmt.Printf("%s ", s)
+	}
+	fmt.Printf("\n")
 }

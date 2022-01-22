@@ -1,3 +1,3 @@
-module github.com/pnuff/dice
+module github.com/pnuff/diceware
 
 go 1.16

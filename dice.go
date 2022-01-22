@@ -23,7 +23,7 @@ func SixSided() (int, error) {
 		return 0, err
 	}
 
-	return 1+int(r.Int64()), err
+	return 1 + int(r.Int64()), err
 }
 
 // Read the wordlist file in, map the dice roll values to the words on each line.
